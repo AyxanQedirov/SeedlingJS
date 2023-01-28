@@ -14,8 +14,8 @@ $(document).ready(() => {
     ];
 
     let options={
-        FileClickEvent:()=>{
-            console.log("tikladim men");
+        FileClickEvent:(eventTarget)=>{
+            console.log(eventTarget.text());
         },
         FileHoverEvent:()=>{
             console.log("usutune geldim men");

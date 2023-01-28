@@ -104,16 +104,16 @@ function createLIElement(value, onclickEvent, onHoverEvent) {
     iconFolder.addClass('bi bi-filetype-html');
     span.text(value);
     iconFolder.append(span);
-    li.hover(function () {
-        onHoverEvent();
+    li.hover(function (event) {
+        onHoverEvent($(event.target));
         li.removeClass("file-hover-out");
         li.addClass("file-hover-in");
     }, function () {
         li.removeClass("file-hover-in");
         li.addClass("file-hover-out");
     });
-    li.click(function () {
-        onclickEvent();
+    li.click(function (event) {
+        onclickEvent($(event.target));
     });
     li.append(iconFolder);
     return li;

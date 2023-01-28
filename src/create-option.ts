@@ -1,8 +1,8 @@
 export class CreateOption{
     FolderIcon:string;
-    FolderClickEvent:()=>{};
-    FolderHoverEvent:()=>{};
+    FolderClickEvent:(eventTarget:any)=>{};
+    FolderHoverEvent:(eventTarget:any)=>{};
     FileIcon:string;
-    FileClickEvent:()=>{};
-    FileHoverEvent:()=>{};
+    FileClickEvent:(eventTarget:any)=>{};
+    FileHoverEvent:(eventTarget:any)=>{};
 }

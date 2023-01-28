@@ -119,7 +119,7 @@ function createULElement(value) {
 }
 
 //Configuring some design and style
-function createLIElement(value,onclickEvent:()=>{},onHoverEvent:()=>{}) {
+function createLIElement(value,onclickEvent:(eventTarget)=>{},onHoverEvent:(eventTarget)=>{}) {
     var li = $('<li>');
     li.addClass('file');
     var span = $('<span>');
@@ -130,8 +130,8 @@ function createLIElement(value,onclickEvent:()=>{},onHoverEvent:()=>{}) {
     span.text(value);
     iconFolder.append(span);
 
-    li.hover(() => {
-        onHoverEvent();
+    li.hover((event) => {
+        onHoverEvent($(event.target));
         li.removeClass("file-hover-out");
         li.addClass("file-hover-in")
     }, () => {
@@ -139,8 +139,8 @@ function createLIElement(value,onclickEvent:()=>{},onHoverEvent:()=>{}) {
         li.addClass("file-hover-out");
     });
 
-    li.click(()=>{
-        onclickEvent();
+    li.click((event)=>{
+        onclickEvent($(event.target));
     });
     li.append(iconFolder);
     return li;
