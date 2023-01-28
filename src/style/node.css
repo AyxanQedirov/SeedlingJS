@@ -1,0 +1,25 @@
+.file-hover-in{
+    background-color: red;
+}
+
+.file-hover-out{
+    background-color: transparent;
+}
+
+.file{
+    padding-left: 10px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.file-text{
+    color: black;
+    padding-left: 5px;
+}
+
+.folder{
+
+}
+
+.folder-text{
+}
