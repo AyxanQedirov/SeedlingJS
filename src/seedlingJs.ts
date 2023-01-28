@@ -1,26 +1,17 @@
 import { RawNode } from "./raw-node";
 import { Node } from "./node";
+import { CreateOption } from "./create-option";
 
 declare var $: any;
 
-$(document).ready(() => {
-    let datas: RawNode[] = [
-        { id: '1', value: 'a', parentid: '#' },
-        { id: '2', value: 'b', parentid: '5' },
-        { id: '3', value: 'c', parentid: '2' },
-        { id: '4', value: 'd', parentid: '#' },
-        { id: '5', value: 'e', parentid: '4' },
-        { id: '6', value: 'test1', parentid: '1' },
-        { id: '7', value: 'yes', parentid: '1' },
-        { id: '8', value: 'no', parentid: '1' },
-        { id: '9', value: 'ikoNam', parentid: '1' },
-        { id: '10', value: 'ikoNam2', parentid: '4' }
-    ];
+//For client using (start point)
+function createTree(elementSelector:string,datas:RawNode[],createOption:CreateOption){
+    let options:any=createOption==null?null:createOption;
 
-    setRawNodes(datas);
-})
+    setRawNodes(datas,elementSelector,options);
+}
 
-function setRawNodes(rawNodes: RawNode[]): void {
+function setRawNodes(rawNodes: RawNode[],drawSideElementSelector:string,options:CreateOption): void {
     let result: Node[] = [];
 
     //define all roots
@@ -43,7 +34,7 @@ function setRawNodes(rawNodes: RawNode[]): void {
 
     //drawing tree    
     result.forEach(tree => {
-        $('.tree-view-side').append(drawTree(tree))
+        $(drawSideElementSelector).append(drawTree(tree,options))
     })
 
 
@@ -62,17 +53,17 @@ function addRawNode(node: Node, rawNodeToAdd: RawNode): void {
 
 }
 
-function drawTree(node: Node): any {
+function drawTree(node: Node,options:CreateOption): any {
 
     if (node.children.length > 0) {
         var ul = createULElement(node.value);
         node.children.forEach(child => {
-            ul.append(drawTree(child));
+            ul.append(drawTree(child,options));
         });
         return ul;
     }
     else {
-        var li = createLIElement(node.value);
+        var li = createLIElement(node.value,options.FileClickEvent,options.FileHoverEvent);
         return li;
     }
 }
@@ -84,13 +75,42 @@ function createULElement(value) {
     var span = $('<span>');
     span.addClass('folder-text');
     var iconFile = $('<i>');
-    iconFile.addClass('bi bi-folder-fill');
-    iconFile.addClass('folder-icon');
-    
-    span.text(value);    
+    iconFile.addClass('bi bi-folder-fill').addClass('folder-icon');
+    var expandIcon = $('<i>');
+    expandIcon.addClass('bi bi-caret-up-fill').addClass('expand-icon');
+    expandIcon.attr('opened', 'true');
+
+    expandIcon.on("click", (event) => {
+        if ($(event.target).attr('opened') == 'true') {
+
+            $(event.target)
+                .removeClass('bi-caret-up-fill')
+                .addClass('bi-caret-down-fill')
+                .parent()
+                .children('li,ul')
+                .removeClass('d-list-item')
+                .addClass('d-none');
+            $(event.target).attr('opened', 'false');
+
+        } else if ($(event.target).attr('opened') == 'false') {
+
+            $(event.target)
+                .removeClass('bi-caret-down-fill')
+                .addClass('bi-caret-up-fill')
+                .parent()
+                .children('li,ul')
+                .removeClass('d-none')
+                .addClass('d-list-item');
+
+            $(event.target).attr('opened', 'true');
+        }
+    })
+
+    expandIcon.append(iconFile);
     iconFile.append(span);
-    
-    ul.append(iconFile);
+    span.text(value);
+
+    ul.append(expandIcon);
 
     iconFile.on("click", () => {
         console.log(value);
@@ -99,23 +119,28 @@ function createULElement(value) {
 }
 
 //Configuring some design and style
-function createLIElement(value) {
+function createLIElement(value,onclickEvent:()=>{},onHoverEvent:()=>{}) {
     var li = $('<li>');
     li.addClass('file');
     var span = $('<span>');
     span.addClass('file-text');
     var iconFolder = $('<i>');
     iconFolder.addClass('bi bi-filetype-html');
-    
+
     span.text(value);
     iconFolder.append(span);
 
     li.hover(() => {
+        onHoverEvent();
         li.removeClass("file-hover-out");
         li.addClass("file-hover-in")
     }, () => {
         li.removeClass("file-hover-in");
         li.addClass("file-hover-out");
+    });
+
+    li.click(()=>{
+        onclickEvent();
     });
     li.append(iconFolder);
     return li;

@@ -7,7 +7,7 @@
 }
 
 .file {
-    padding-left: 10px;
+    padding-left: 20px;
     list-style: none;
     cursor: pointer;
 }
@@ -30,4 +30,18 @@
 
 .folder-icon{
     color:#F7C600;
+}
+
+.expand-icon{
+    color:gray;
+    cursor: pointer;
+}
+
+.d-none{
+    display: none;
+}
+
+.d-list-item{
+    display: list-item;
+    list-style: none;
 }
