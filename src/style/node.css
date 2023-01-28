@@ -1,25 +1,33 @@
-.file-hover-in{
+.file-hover-in {
     background-color: red;
 }
 
-.file-hover-out{
+.file-hover-out {
     background-color: transparent;
 }
 
-.file{
+.file {
     padding-left: 10px;
     list-style: none;
     cursor: pointer;
 }
 
-.file-text{
+.file-text {
     color: black;
     padding-left: 5px;
+    font-style: normal;
 }
 
-.folder{
-
+.folder {
+    padding-left:10px;
 }
 
-.folder-text{
+.folder-text {
+    color: black;
+    padding: 5px;
+    font-style: normal;
+}
+
+.folder-icon{
+    color:#F7C600;
 }

@@ -80,14 +80,16 @@ function drawTree(node: Node): any {
 //Configuring some design and style
 function createULElement(value) {
     var ul = $('<ul>');
+    ul.addClass('folder');
     var span = $('<span>');
-    var iconFile = $('<i class="bi bi-folder-fill">');
-    span.text(value);
-    span.css("color", "gray");
-    span.css("padding-left", "5px");
+    span.addClass('folder-text');
+    var iconFile = $('<i>');
+    iconFile.addClass('bi bi-folder-fill');
+    iconFile.addClass('folder-icon');
+    
+    span.text(value);    
     iconFile.append(span);
-    iconFile.css("color", "#F7C600");
-    ul.css("padding-left", "10px");
+    
     ul.append(iconFile);
 
     iconFile.on("click", () => {
@@ -104,6 +106,7 @@ function createLIElement(value) {
     span.addClass('file-text');
     var iconFolder = $('<i>');
     iconFolder.addClass('bi bi-filetype-html');
+    
     span.text(value);
     iconFolder.append(span);
 
